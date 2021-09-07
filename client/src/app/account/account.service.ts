@@ -50,6 +50,7 @@ export class AccountService {
       map((user:IUser) => {
         if(user){
           localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
         }
       })
     )
@@ -60,6 +61,7 @@ export class AccountService {
     this.currentUserSource.next(null);
     this.router.navigateByUrl('/');
   }
+
 
   checkEmailExists(email:string){
     return this.http.get(this.baseUrl +'/account/emailexists?email='+email);
