@@ -1,6 +1,6 @@
 import { IAddress } from "./address";
 
-export interface IOrderCreate {
+export interface IOrderToCreate {
     basketId: string;
     deliveryMethodId: number;
     shipToAddress: IAddress;

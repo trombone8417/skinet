@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Basket, IBasket, IBasketItem, IBasketTotals } from '../models/basket';
 import { IDeliveryMethod } from '../models/deliveryMethod';
+import { IOrderToCreate } from '../models/order';
 import { IProduct } from '../models/product';
 
 @Injectable({
@@ -19,6 +20,11 @@ export class BasketService {
   shipping = 0;
 
   constructor(private http: HttpClient) { }
+
+
+  createOrder(order: IOrderToCreate){
+    return this.http.post(this.baseUrl + 'orders', order);
+  }
 
   setShippingPrice(deliveryMethod: IDeliveryMethod){
     this.shipping = deliveryMethod.price;
@@ -83,6 +89,14 @@ export class BasketService {
       }
     }
   }
+
+  deleteLocalBasket(id:string){
+    this.basketSource.next(null);
+    this.basketTotalSource.next(null);
+    localStorage.removeItem('basket_id');
+  }
+
+
   deleteBasket(basket: IBasket) {
     return this.http.delete(this.baseUrl + 'basket?id='+basket.id).subscribe(()=>{
       this.basketSource.next(null);
