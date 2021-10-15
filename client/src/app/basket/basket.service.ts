@@ -22,9 +22,6 @@ export class BasketService {
   constructor(private http: HttpClient) { }
 
 
-  createOrder(order: IOrderToCreate){
-    return this.http.post(this.baseUrl + 'orders', order);
-  }
 
   setShippingPrice(deliveryMethod: IDeliveryMethod){
     this.shipping = deliveryMethod.price;
